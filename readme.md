@@ -1,9 +1,9 @@
 # 🐍 Viper >> Automated Move Auditor 
 **A lightweight static analyzer for Sui Move smart contracts**  
-ViperGuard scans `.move` modules and `Move.toml` packages for common security pitfalls.  
+Viper scans `.move` modules and `Move.toml` packages for common security pitfalls.  
 It generates **TXT** or **CSV** reports with flagged vulnerabilities under clear headers
 
-## ✨ Why ViperGuard?
+## ✨ Why Viper?
 The **Move language** (used in **Sui**) was designed with **resource safety and formal verification** in mind.  
 Its strong typing, *linear resource model*, and its integration with **Move Prover** make it one of the most secure smart contract languages.
 
