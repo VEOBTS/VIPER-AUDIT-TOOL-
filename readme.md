@@ -37,3 +37,31 @@ The scanning rules are inspired by real research, CVEs, and auditing primers, in
 - Outputs neat **TXT** report (ASCII banner + sections)  
 - Optional **CSV export** for spreadsheet workflows  
 
+
+
+## how to run 
+
+pip install -r requirements.txt >> install requiremnents 
+
+## ONE-LINERS TO RUN THE SCRIPT 
+
+python viper_scan.py /path/to/move/package --output report.txt 
+
+   ##           OR
+
+python viper_scan.py /path/to/move/package --output report.txt --csv report.csv
+
+⚠️ Disclaimer
+
+Viper is not a substitute for:
+
+Formal verification with Move Prover
+professional audits
+Runtime fuzzing
+
+It’s a first-pass heuristic scanner:
+✅ Quick to run
+✅ Easy to understand
+❌ May report false positives/negatives
+
+
