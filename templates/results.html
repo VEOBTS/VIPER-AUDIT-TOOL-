@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Viper — Scan Results</title>
+  <style>
+    body { font-family: monospace; background: #0d0d0d; color: #e0e0e0; max-width: 900px; margin: 40px auto; padding: 0 20px; }
+    h1 { color: #7fff00; }
+    h2 { color: #aaa; border-bottom: 1px solid #333; padding-bottom: 6px; }
+    a { color: #7fff00; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .meta { color: #666; font-size: 13px; margin-bottom: 24px; }
+    .finding { background: #1a1a1a; border-left: 3px solid #ffcc00; padding: 14px 18px; margin-bottom: 12px; border-radius: 4px; }
+    .finding .rule { color: #ffcc00; font-weight: bold; font-size: 13px; margin-bottom: 4px; }
+    .finding .file { color: #555; font-size: 12px; margin-bottom: 6px; }
+    .finding .msg { color: #e0e0e0; }
+    .clean { background: #0a2a0a; border-left: 3px solid #7fff00; padding: 14px 18px; border-radius: 4px; color: #7fff00; }
+    .actions { margin-bottom: 24px; }
+    .btn { background: #7fff00; color: #000; padding: 8px 18px; border-radius: 4px; font-weight: bold; font-size: 13px; margin-right: 10px; }
+  </style>
+</head>
+<body>
+  <h1>🐍 Scan Results</h1>
+  <div class="meta">
+    File: <strong>{{ scan['filename'] }}</strong> &nbsp;|&nbsp;
+    Scanned: {{ scan['scanned_at'][:19].replace('T',' ') }} UTC &nbsp;|&nbsp;
+    Findings: <strong>{{ scan['total_findings'] }}</strong>
+  </div>
+
+  <div class="actions">
+    <a class="btn" href="/download/{{ scan['id'] }}">⬇ Download Report</a>
+    <a href="/">← Back to Home</a>
+  </div>
+
+  <h2>Findings</h2>
+  {% if findings %}
+    {% for f in findings %}
+    <div class="finding">
+      <div class="rule">{{ f['rule'] }}</div>
+      <div class="file">{{ f['file'] }}</div>
+      <div class="msg">{{ f['message'] }}</div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="clean">✅ No issues found — clean scan.</div>
+  {% endif %}
+</body>
+</html>

@@ -1,14 +1,3 @@
-#!/usr/bin/env python3
-"""
-Viper - Simple Move/Sui heuristic auditor (by Demeji)
-Usage:
-  python viper_scan.py /path/to/move/package --output report.txt [--csv] [--online]
-
-Notes:
- - This is a heuristic scanner (regex + simple body parsing). It will have false positives/negatives.
- - Use --online to attempt fetching extra heuristic hints from community/security pages (optional).
-"""
-
 import os, sys, re, argparse, json, csv, time
 from datetime import datetime
 
@@ -23,7 +12,6 @@ try:
 except Exception:
     requests = None
 
-# ------------------ banner & helpers ------------------
 BANNER_TEXT = "VIPER"
 BANNER_BY = "by DEMEJI"
 
@@ -42,7 +30,6 @@ def short_summary_line(msg):
     # Only used for terminal summary; main output goes to report file
     print(msg)
 
-# ------------------ find files ------------------
 def collect_move_files(root):
     files = []
     for r, dirs, fns in os.walk(root):
@@ -51,7 +38,6 @@ def collect_move_files(root):
                 files.append(os.path.join(r, fn))
     return sorted(files)
 
-# ------------------ simple parser helpers ------------------
 def read_text(path):
     try:
         with open(path, "r", encoding="utf-8") as fh:
@@ -127,7 +113,6 @@ def find_functions(src):
         funcs.append({"kind": kind, "name": name, "params": params_text.strip(), "body": body})
     return funcs
 
-# ------------------ heuristic rules (based on your list) ------------------
 BUILT_IN_RULES = [
     # rule id, short message, checker function (file_src, structs, funcs) -> list of messages
     ("struct_missing_has_key",
@@ -184,7 +169,6 @@ BUILT_IN_RULES = [
     )
 ]
 
-# ------------------ optional online patterns (simple) ------------------
 ONLINE_SOURCES = [
     # light set of pages that discuss Move/Sui security (used only for heuristics / notes)
     "https://sui.io/security",
@@ -209,7 +193,6 @@ def fetch_online_rules():
             hints.append(f"Error fetching {url}: {e}")
     return hints
 
-# ------------------ main audit per file ------------------
 def audit_file(path, do_online=False):
     src = read_text(path)
     structs = find_structs(src)
@@ -228,7 +211,6 @@ def audit_file(path, do_online=False):
         online_notes = fetch_online_rules()
     return findings, online_notes
 
-# ------------------ runner ------------------
 def run_scan(root, out_path, csv_out=None, do_online=False):
     files = collect_move_files(root)
     report_entries = []
@@ -253,6 +235,8 @@ def run_scan(root, out_path, csv_out=None, do_online=False):
                     fout.write(f"  * {n}\n")
                 fout.write("\n")
         fout.write("\nScan finished.\n")
+    return report_entries
+
     short_summary_line(f"Wrote report: {out_path}")
     if csv_out:
         with open(csv_out, "w", newline='', encoding="utf-8") as cf:
@@ -261,8 +245,8 @@ def run_scan(root, out_path, csv_out=None, do_online=False):
             for r in report_entries:
                 writer.writerow(r)
         short_summary_line(f"Wrote csv: {csv_out}")
+        
 
-# ------------------ CLI ------------------
 def main_cli():
     p = argparse.ArgumentParser(prog="viper_scan", description="Viper - simple Move/Sui heuristic auditor")
     p.add_argument("path", help="path to Move package or folder")
