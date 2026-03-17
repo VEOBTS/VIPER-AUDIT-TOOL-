@@ -115,9 +115,11 @@ def download(scan_id):
     flash("Report file not found.")
     return redirect(url_for("index"))
 
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(REPORT_FOLDER, exist_ok=True)
+init_db()
+
 # ── App entry point ────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-    os.makedirs(REPORT_FOLDER, exist_ok=True)
-    init_db()
+
     app.run(debug=True)

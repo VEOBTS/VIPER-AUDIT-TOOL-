@@ -16,14 +16,7 @@ Even with these protections, **developers can still shoot themselves in the foot
 - Poor **assert placement** leading to exploitable state changes
 
 These are not flaws of Move itself, but **developer mistakes** that attackers can exploit.  
-`Viper` helps catch them **early**, before they reach production.
-
-## 📚 Vulnerability Sources
-The scanning rules are inspired by real research, CVEs, and auditing primers, including:
-- [SlowMist Sui Move Smart Contract Auditing Primer](https://github.com/slowmist/Sui-MOVE-Smart-Contract-Auditing-Primer)  
-- [Sui Security Best Practices](https://sui.io/security)  
-- [MoveBit Research on Sui Objects](https://movebit.xyz/blog/post/Sui-Objects-Security-Principles-and-Best-Practices.html)  
-- Known exploit classes reported in **Sui/Solana-style ecosystems**  
+`Viper` helps catch them **early**, before they reach production.*  
 
 ## 🚀 Features
 - Scans `.move` source files and `Move.toml` manifests
@@ -32,24 +25,8 @@ The scanning rules are inspired by real research, CVEs, and auditing primers, in
   - Missing permission/capability validation
   - Unverified calculation/oracle data
   - Late or missing `assert!` checks
-- **Offline by default** → deterministic scans  
-- Optional `--online` flag → fetches community advisories for context  
-- Outputs neat **TXT** report (ASCII banner + sections)  
-- Optional **CSV export** for spreadsheet workflows  
+  
 
-
-
-## how to run 
-
-pip install -r requirements.txt >> install requiremnents 
-
-## ONE-LINERS TO RUN THE SCRIPT 
-
-python viper_scan.py /path/to/move/package --output report.txt 
-
-   ##           OR
-
-python viper_scan.py /path/to/move/package --output report.txt --csv report.csv
 
 ⚠️ Disclaimer
 
