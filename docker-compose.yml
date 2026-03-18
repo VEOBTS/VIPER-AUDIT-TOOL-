@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  viper:
+    build: .                        # build from the Dockerfile in this folder
+    ports:
+      - "5000:5000"                 # expose port 5000
+    volumes:
+      - ./uploads:/app/uploads      # persist uploads
+      - ./reports:/app/reports      # persist reports
+      - ./viper.db:/app/viper.db    # persist database
+    environment:
+      - FLASK_ENV=production
+    restart: unless-stopped         # auto-restart if the container crashes
