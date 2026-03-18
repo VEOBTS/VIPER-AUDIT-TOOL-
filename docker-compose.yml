@@ -1,14 +1,22 @@
-version: "3.9"
-
 services:
-  viper:
-    build: .                        # build from the Dockerfile in this folder
+  flask:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "5000:5000"                 # expose port 5000
+      - "5000:5000"
+    env_file:
+      - .env
     volumes:
-      - ./uploads:/app/uploads      # persist uploads
-      - ./reports:/app/reports      # persist reports
-      - ./viper.db:/app/viper.db    # persist database
-    environment:
-      - FLASK_ENV=production
-    restart: unless-stopped         # auto-restart if the container crashes
+      - ./uploads:/app/uploads
+      - ./reports:/app/reports
+      - ./viper.db:/app/viper.db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - flask
